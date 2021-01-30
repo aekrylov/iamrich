@@ -1,4 +1,4 @@
-package con.github.aekrylov.iamrich
+package com.github.aekrylov.iamrich
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

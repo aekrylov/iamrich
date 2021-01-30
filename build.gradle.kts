@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.4.21"
 }
 
-group = "con.github.aekrylov"
+group = "com.github.aekrylov"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 

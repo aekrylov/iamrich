@@ -1,4 +1,4 @@
-package con.github.aekrylov.iamrich
+package com.github.aekrylov.iamrich
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
