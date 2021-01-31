@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres:12.5
+    hostname: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:delegated
+    ports:
+      - 5432
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=iamrich
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=iamrich
+
+  app:
+    build:
+      context: ./
+    hostname: app
+    ports:
+      - 8080:8080
+    command:
+      - java
+      - -jar
+      - -Dserver.port=8080
+      - -Dspring.datasource.url=jdbc:postgresql://db:5432/iamrich
+      - -Dspring.datasource.username=iamrich
+      - -Dspring.datasource.password=password
+      - iamrich.jar
+
+volumes:
+  postgres_data:
