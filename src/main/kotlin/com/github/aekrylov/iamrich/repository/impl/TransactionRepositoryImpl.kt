@@ -13,7 +13,7 @@ import java.time.OffsetDateTime
 class TransactionRepositoryImpl(val mapper: TransactionMapper) : TransactionRepository {
 
     override suspend fun insert(data: TransactionDto) = withContext(Dispatchers.IO) {
-        mapper.insert(data.date, data.amount.toSatoshi())
+        mapper.insert(data.datetime, data.amount.toSatoshi())
     }
 
     override suspend fun getTotalSatoshiForPeriod(dateStart: OffsetDateTime, dateEndExclusive: OffsetDateTime) =

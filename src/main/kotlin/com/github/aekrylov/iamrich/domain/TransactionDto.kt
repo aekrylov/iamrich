@@ -7,7 +7,7 @@ import javax.validation.constraints.Positive
 
 data class TransactionDto(
         @field:NotNull
-        val date: OffsetDateTime,
+        val datetime: OffsetDateTime,
 
         @field:NotNull
         @field:Positive
