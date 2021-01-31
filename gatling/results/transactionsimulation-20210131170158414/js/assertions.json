@@ -1,0 +1,10 @@
+{
+  "simulation": "iamrich.TransactionSimulation",
+  "simulationId": "transactionsimulation",
+  "start": 1612112518414,
+  "description": "1231",
+  "scenarios": ["Post transaction"],
+  "assertions": [
+
+  ]
+}
