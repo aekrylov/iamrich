@@ -34,7 +34,7 @@
         </preConditions>
         <sql>
             insert into balance(date, balance_satoshi)
-            values (now(), 1000 * 100000000)
+            values (now(), 100000000000) -- 1000 bitcoin
         </sql>
     </changeSet>
 

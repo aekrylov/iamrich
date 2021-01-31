@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.OffsetDateTime
+import java.time.ZoneOffset
 
 @SpringBootTest
 class BalanceMapperTest {
@@ -23,7 +24,7 @@ class BalanceMapperTest {
 
     @Test
     fun `insert works`() {
-        val balance = Balance(OffsetDateTime.now(), 123)
+        val balance = Balance(OffsetDateTime.now().withOffsetSameInstant(ZoneOffset.UTC), 123)
 
         mapper.insert(balance.date, balance.balanceSatoshi)
 
@@ -40,8 +41,8 @@ class BalanceMapperTest {
 
         mapper.getInRange(date1, date2) should {
             it.size shouldBe 2
-            it[0] shouldBe Balance(date1, 123)
-            it[1] shouldBe Balance(date2, 123)
+            it[0] shouldBe Balance(date1.withOffsetSameInstant(ZoneOffset.UTC), 123)
+            it[1] shouldBe Balance(date2.withOffsetSameInstant(ZoneOffset.UTC), 123)
         }
     }
 }

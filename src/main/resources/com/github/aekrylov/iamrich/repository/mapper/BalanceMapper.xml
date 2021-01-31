@@ -19,7 +19,7 @@
     <select id="getInRange" resultType="com.github.aekrylov.iamrich.domain.Balance"><![CDATA[
         select date, balance_satoshi
         from balance
-        where #{dateStart} <= date and date <= #{dateEnd}
+        where #{startInclusive} <= date and date <= #{endInclusive}
     ]]>
     </select>
 
