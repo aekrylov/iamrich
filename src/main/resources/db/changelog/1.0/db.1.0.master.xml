@@ -28,4 +28,14 @@
         </sql>
     </changeSet>
 
+    <changeSet id="db.1.0-insert-initial-balance" author="aekrylov">
+        <preConditions onFail="WARN">
+            <sqlCheck expectedResult="0">select count(1) from balance</sqlCheck>
+        </preConditions>
+        <sql>
+            insert into balance(date, balance_satoshi)
+            values (now(), 1000 * 100000000)
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

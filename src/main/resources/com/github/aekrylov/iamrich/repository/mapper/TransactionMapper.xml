@@ -9,6 +9,12 @@
         values (#{date}, #{amountSatoshi})
     </insert>
 
+    <select id="getTotalSatoshiForPeriod" resultType="long"><![CDATA[
+        select coalesce(sum(amount_satoshi), 0)
+        from transaction
+        where #{dateStart} <= date and date < #{dateEndExclusive}
+    ]]></select>
+
     <delete id="truncate">
         truncate table transaction;
     </delete>

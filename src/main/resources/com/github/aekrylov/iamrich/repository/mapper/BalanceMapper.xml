@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.github.aekrylov.iamrich.repository.mapper.BalanceMapper">
+
+    <insert id="insert">
+        insert into balance (date, balance_satoshi)
+        values (#{date}, #{balanceSatoshi});
+    </insert>
+
+    <select id="getLatest" resultType="com.github.aekrylov.iamrich.domain.Balance">
+        select date, balance_satoshi
+        from balance
+        order by date desc
+        limit 1
+    </select>
+
+    <select id="getInRange" resultType="com.github.aekrylov.iamrich.domain.Balance"><![CDATA[
+        select date, balance_satoshi
+        from balance
+        where #{dateStart} <= date and date <= #{dateEnd}
+    ]]>
+    </select>
+
+    <delete id="truncate">
+        truncate table balance;
+    </delete>
+
+</mapper>
