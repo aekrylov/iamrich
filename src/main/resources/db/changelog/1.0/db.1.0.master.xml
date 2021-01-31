@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="db.1.0-transaction-table" author="aekrylov">
+        <sql>
+            create table transaction (
+                id serial primary key,
+                date timestamptz not null,
+                amount_satoshi bigint not null
+            );
+
+            create index idx_transaction_date on transaction (date);
+        </sql>
+    </changeSet>
+
+    <changeSet id="db.1.0-balance-table" author="aekrylov">
+        <sql>
+            create table balance (
+                entry_id serial primary key,
+                date timestamptz not null,
+                balance_satoshi bigint not null
+            );
+
+            create index idx_balance_date on balance (date);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
