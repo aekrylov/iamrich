@@ -4,6 +4,7 @@ import java.math.BigDecimal
 import java.time.OffsetDateTime
 
 const val SATOSHI_IN_BTC = 100_000_000
+const val SATOSHI_BTC_SCALE = 8
 
 data class Transaction(
         val id: Long,
@@ -11,4 +12,4 @@ data class Transaction(
         val amountSatoshi: Long
 )
 
-fun BigDecimal.toSatoshi(): Long = longValueExact() * SATOSHI_IN_BTC
+fun BigDecimal.toSatoshi(): Long = this.scaleByPowerOfTen(SATOSHI_BTC_SCALE).longValueExact()
