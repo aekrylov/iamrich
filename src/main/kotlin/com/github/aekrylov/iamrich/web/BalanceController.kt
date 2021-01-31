@@ -1,5 +1,6 @@
 package com.github.aekrylov.iamrich.web
 
+import com.github.aekrylov.iamrich.domain.satoshiToBitcoin
 import com.github.aekrylov.iamrich.service.BalanceService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,4 +15,5 @@ class BalanceController(private val balanceService: BalanceService) {
     @PostMapping("/history")
     suspend fun getBalanceHistory(@Valid @RequestBody request: GetBalanceHistoryRequest) =
             balanceService.getBalancesForRange(request.startDatetime, request.endDatetime)
+                    .map { BalanceResponse(it.date, it.balanceSatoshi.satoshiToBitcoin()) }
 }

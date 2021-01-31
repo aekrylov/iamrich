@@ -13,3 +13,5 @@ data class Transaction(
 )
 
 fun BigDecimal.toSatoshi(): Long = this.scaleByPowerOfTen(SATOSHI_BTC_SCALE).longValueExact()
+
+fun Long.satoshiToBitcoin(): BigDecimal = BigDecimal(this).scaleByPowerOfTen(-SATOSHI_BTC_SCALE)

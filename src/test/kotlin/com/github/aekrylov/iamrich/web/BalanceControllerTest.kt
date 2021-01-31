@@ -1,5 +1,6 @@
 package com.github.aekrylov.iamrich.web
 
+import com.github.aekrylov.iamrich.domain.Balance
 import com.github.aekrylov.iamrich.service.BalanceService
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -21,6 +22,11 @@ internal class BalanceControllerTest {
     @Autowired
     private lateinit var webClient: WebTestClient
 
+    @Autowired
+    private lateinit var balanceService: BalanceService
+
+    private val now = OffsetDateTime.now()
+
     @ParameterizedTest
     @MethodSource("invalidData")
     fun `validates the request`(request: RequestDto) {
@@ -32,10 +38,22 @@ internal class BalanceControllerTest {
 
     @Test
     fun `handles empty lists`() {
-        request(RequestDto(OffsetDateTime.now().minusHours(1), OffsetDateTime.now()))
+        request(RequestDto(now.minusHours(1), now))
                 .expectStatus().isOk
                 .expectBody()
                 .jsonPath("$").isArray
+    }
+
+    @Test
+    fun `maps satoshi to bitcoin correctly`() {
+        coEvery {
+            balanceService.getBalancesForRange(any(), any())
+        } returns listOf(Balance(now, 123456789))
+
+        request(RequestDto(now.minusHours(1), now))
+                .expectBody()
+                .jsonPath("$[0].datetime").isEqualTo(now.toString())
+                .jsonPath("$[0].amount").isEqualTo("1.23456789")
     }
 
     private fun request(request: RequestDto) = webClient.post().uri("/balance/history")
