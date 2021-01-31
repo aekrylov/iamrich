@@ -11,7 +11,7 @@ interface BalanceMapper {
 
     fun insert(date: OffsetDateTime, balanceSatoshi: Long)
 
-    fun getLatest(): Balance //todo nullability?
+    fun getLatest(): Balance
 
     fun getInRange(startInclusive: OffsetDateTime, endInclusive: OffsetDateTime): List<Balance>
 

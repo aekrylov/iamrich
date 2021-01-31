@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
+import java.time.temporal.ChronoUnit
 
 @Component
 class BalanceService(
@@ -42,12 +43,15 @@ class BalanceService(
         }
 
         coroutineScope {
-            generateSequence(latest.date.plusHours(1)) { it.plusHours(1) }
+            // truncate latest date to hours and start from the next hour
+            generateSequence(latest.date.truncatedTo(ChronoUnit.HOURS).plusHours(1)) { it.plusHours(1) }
                     .takeWhile { it <= dateEnd }
                     .asFlow()
                     .map {
                         async {
-                            it to transactionRepository.getTotalSatoshiForPeriod(it.minusHours(1), it)
+                            // in case latest balance is not truncated
+                            val periodStart = listOf(latest.date, it.minusHours(1)).maxOrNull()!!
+                            it to transactionRepository.getTotalSatoshiForPeriod(periodStart, it)
                         }
                     }
                     .buffer(BUFFER_SIZE)
